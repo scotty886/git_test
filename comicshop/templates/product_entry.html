@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> PRODUCT ENTRY PAGE - ADMIN SECTION</h1>
+     <hr>
+    <br/><br/><br/>
+
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-4"></div>
+
+                       <form method="POST" action="{% url 'product_entry' %}">
+                      <div class="col-md-4">
+                          {% csrf_token %}
+                          {{form.as_p}}
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                          </form>
+
+                      <div class="col-md-8"></div>
+                  </div>
+              </div>
+
+</div>
+    </center>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> SHIPPED ORDERS</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <table class="table table-striped table-hover table-bordered my-5">
+            <thead class=“table-dark”>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Artist Name</th>
+                  <th scope="col">Comics</th>
+                  <th scope="col">Date Shipped</th>
+                  <th scope="col">Shipped</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders %}
+                <tr>
+                      <td><a href="{% url 'orders' order.id %}">{{ order.id }}</a></td>
+                  <td>${{ order.amount_paid }}</td>
+                  <td>{{ order.full_name }}</td>
+                  <td>{{ order.email }}</td>
+                  <td>{{ order.date_ordered }}</td>
+                  <td>
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="shipping_status" value="false">
+                      <input type="hidden" name="num" value="{{ order.id }}">
+                      <button type="submit" class="btn btn-danger btn-sm">Mark as Not Shipped</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+
+
+</div>
+    </center>
+
+{% endblock %}

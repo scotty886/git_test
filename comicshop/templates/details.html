@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+
+<div class="container-fluid">
+    <h1> PRODUCT DETAIL PAGE</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+            <div class="card mb-8" style="max-width: 1000px; ">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{product.artist_name}}</h5>
+                    <p class="card-text">Main Publisher: {{product.category}} </p>
+                      <p class="card-text">Main comics: {{product.comics}}</p>
+                      <p class="card-text">Work link: {{product.work_link}}</p>
+                      <p class="card-text">Stock Number: {{product.stock_number}}</p>
+                      <p class="card-text">Price per collection: <b>{{product.price}}</b> </p>
+
+                      <div class="row justify-content">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2">Quantity: </div>
+                          <div class="col-md-2">
+                              <select class="form-select" aria-label="Default select example" id="qty-cart">
+                                  <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="card-footer">
+                        <button type="button" value="{{product.id}}" class="btn btn-outline-success" id="add-cart">
+                            Add to Cart
+                        </button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <br/><br/>
+    <hr>
+    <br/>
+
+
+    <!--------- MORE PHOTOS OF PRODUCT -------->
+
+            <div class="card-group">
+                  <div class="card">
+                    <img src="{{product.image1.url}}" class="card-img-top" alt="...">
+                  </div>
+                   <div class="card">
+                    <img src="{{product.image2.url}}" class="card-img-top" alt="...">
+                  </div>
+                  < <div class="card">
+                    <img src="{{product.image3.url}}" class="card-img-top" alt="...">
+                  </div>
+                <div class="card">
+                    <img src="{{product.image4.url}}" class="card-img-top" alt="...">
+                  </div>
+            </div>
+            <br/>
+             <div class="card-group">
+                  <div class="card">
+                    <img src="{{product.image5.url}}" class="card-img-top" alt="...">
+                  </div>
+                   <div class="card">
+                    <img src="{{product.image6.url}}" class="card-img-top" alt="...">
+                  </div>
+                  < <div class="card">
+                    <img src="{{product.image7.url}}" class="card-img-top" alt="...">
+                  </div>
+                <div class="card">
+                    <img src="{{product.image8.url}}" class="card-img-top" alt="...">
+                  </div>
+            </div>
+
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center mb-0 p-3" data-timeout=5000 role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+
+
+
+
+</div>
+    </center>
+
+<script>
+    // Check if button pressed
+    $(document).on('click', '#add-cart', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: $('#add-cart').val(),
+                product_qty: $('#qty-cart option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json){
+                //console.log(json)
+                document.getElementById("cart_quantity").textContent = json.qty
+                textContent = json.qty
+            },
+            error: function(xhr, errmsg, err){
+
+            }
+        })
+    })
+
+</script>
+
+
+{% endblock %}

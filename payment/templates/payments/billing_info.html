@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> BILLING PAGE</h1>
+     <hr>
+    <br/><br/><br/>
+
+                                            <form>
+                                                {{billing_form.as_p}}
+                                            </form>
+
+
+                     <div class="row">
+                               <div class="col-md-6 offset-md-3">
+                                   <div class="card">
+                                      <div class="card-header">
+                                        <b>Order Summary</b>
+                                      </div>
+                                          <div class="card-body">
+                                            <h5 class="card-title">Orders</h5>
+                                              <p>{{product}}</p>
+                                            <p class="card-text">
+                                                {% for product in cart_products %}
+                                                  Artist: <b>{{product.artist_name}}</b>&nbsp;&nbsp; |
+                                                  Qty:
+                                                   {% for key, value in quantities.items %}
+                                                    {% if key == product.id|slugify %} <b>{{value}}</b>&nbsp;&nbsp;
+                                                    {% endif %}
+                                                    {% endfor %}
+
+                                                  | Price: <b>{{product.price}}-each</b>
+                                                    <br/> <hr>
+                                                {% endfor %}
+                                                    </p>
+                                          </div>
+                                          <div class="card-text">
+                                              <div class="alert alert-primary" role="alert">
+                                                  <h5>ORDER TOTAL: <b>{{totals}}</b></h5>
+                                                </div>
+                                          </div>
+                                       <div class="card-footer">
+                                           <a href="{% url 'cart_summary' %}" class="btn btn-secondary">Update Items</a>
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+
+
+    <!--------- SHIPPING INFORMATION ------>
+
+                 <div class="container">
+
+                     <div class="row">
+                         <div class="col"></div>
+                         <div class="col">
+
+                             <div class="card">
+                                 <div class="card-header">Shipping Info</div>
+                                     <form method="POST" action="{% url 'billing_info' %}">
+
+                                         <div class="card-body">
+                                         <p class="m-0">
+                                                Name: <strong>{{ shipping_address.shipping_full_name }}</strong>
+                                              </p>
+                                              <p class="m-0">Email: {{ shipping_addr.shipping_email }}</p>
+                                              <p class="m-0">Address1: {{ shipping_address.shipping_address1 }}</p>
+                                              <p class="m-0">Address2: {{ shipping_address.shipping_address2 }}</p>
+                                              <p class="m-0">City: {{ shipping_address.shipping_city }}</p>
+                                              <p class="m-0">Sate | Province: {{ shipping_address.shipping_state }}</p>
+                                              <p class="m-0">
+                                                Postal Code: {{ shipping_address.shipping_postal_code }}
+                                              </p>
+                                              <p class="m-0">Country: {{ shipping_address.shipping_country }}</p>
+                                        </div>
+
+                                        <div class="card-footer">
+                                                <a href="{% url 'checkout' %}" class="btn btn-lg btn-secondary">
+                                                      Update Shipping <i class="fa-solid fa-arrow-right"></i>
+                                                </a>
+
+                                        </div>
+                                     </form>
+                             </div>
+                         </div>
+                         <div class="col"></div>
+                     </div>
+                 </div>
+        <br/><br/>
+
+  <!--------- BILLINGINFORMATION ------>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-7">
+                <form method="POST" action="{% url 'process_order' %}">
+                <div class="card">
+                    <div class="card-header">Billing Information</div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{bill.as_p}}
+                    </div>
+                    <div class="card-footer">
+                        <div class="card=footer">
+                                <button type="submit" class="btn btn-success btn-lg w-100">
+                                      Place Order <i class="fa-regular fa-check"></i>
+                                    </button>
+                    </div>
+            </div>
+                    </form>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+</div>
+    </center>
+
+{% endblock %}

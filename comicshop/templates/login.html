@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> ABOUT PAGE</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>
+                <input type="text" class="form-control" name="username" placeholder="Enter username">
+            </label>
+
+        </div>
+        <br/>
+        <div class="mb-3">
+            <label>
+                <input type="password" class="form-control" name="password" placeholder="Enter password">
+            </label>
+
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-outline-primary">Login</button>
+    </form>
+</div>
+    </center>
+
+{% endblock %}

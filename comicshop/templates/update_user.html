@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> UPDATE USER</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <form method="POST" class="form-signin" action="{% url 'update_user' %}">
+        {% csrf_token %}
+        <label>
+            {{ user_form.as_p }}
+            <button type="submit" class="btn btn-outline-success">Update Info</button>
+        </label>
+    </form>
+</div>
+     </center>
+
+{% endblock %}

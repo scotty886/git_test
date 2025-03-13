@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> ARTISTS BY PUBLISHERS</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <div class="alert alert-info" role="alert">
+        <H1><B>{{category}}</B></H1>
+    </div>
+    <br/><br/><br/>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="{{product.image.url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{product.artist_name}} | {{product.category}}</h5>
+                <h6><b>{{product.price}}</b></h6>
+                <a href="{% url 'details' product.id %}" class="btn btn-outline-success">Details</a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
+</div>
+    </center>
+
+{% endblock %}

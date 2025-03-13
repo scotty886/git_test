@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> CHECKOUT PAGE</h1>
+     <hr>
+    <br/><br/><br/>
+
+            <div class="row">
+               <div class="col-md-6 offset-md-3">
+                   <div class="card">
+                      <div class="card-header">
+                        <b>Order Summary</b>
+                      </div>
+                          <div class="card-body">
+                            <h5 class="card-title">Orders</h5>
+                              <p>{{product}}</p>
+                            <p class="card-text">
+                                {% for product in cart_products %}
+                                  Artist: <b>{{product.artist_name}}</b>&nbsp;&nbsp; |
+                                  Qty:
+                                   {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %} <b>{{value}}</b>&nbsp;&nbsp;
+                                    {% endif %}
+                                    {% endfor %}
+
+                                  | Price: <b>{{product.price}}-each</b>
+                                    <br/> <hr>
+                                {% endfor %}
+                                    </p>
+                          </div>
+                          <div class="card-text">
+                              <div class="alert alert-primary" role="alert">
+                                  <h5>ORDER TOTAL: <b>{{totals}}</b></h5>
+                                </div>
+                          </div>
+                   </div>
+               </div>
+            </div>
+</div>
+
+    </center>
+
+ <!-------- SHIPPING INFORMATION ----->
+     <div class="container">
+         <!---- start row ------->
+         <div class="row">
+             <div class="col"></div>
+             <div class="col">
+                 <form method="POST" action="{% url 'billing_info' %}">
+                     <div class="card">
+                            {% csrf_token %}
+                         <div class="card-header">Shipping Info</div>
+                         <div class="card-body">{{ shipping_form.as_p }}</div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-outline-success">Proceed to Billing</button>
+                            </div>
+                     </div>
+                 </form>
+
+             </div>
+             <div class="col"></div>
+         </div>
+     </div>
+
+{% endblock %}

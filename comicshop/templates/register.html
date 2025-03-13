@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<div class="container-fluid">
+    <h1> REGISTER PAGE</h1>
+     <hr>
+    <br/><br/><br/>
+
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+
+             <form method="POST" class="form-signin" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-outline-primary">Register</button>
+                <br/><br/>
+            </form>
+
+
+
+        </div>
+        <div class="col-md-3"></div>
+
+
+    </div>
+
+
+</div>
+     </center>
+
+{% endblock %}
